@@ -1,0 +1,85 @@
+<html>
+	<head>
+    	<title>jSlide jQuery Carousel Plugin</title>
+    	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    	<link rel="stylesheet" type="text/css" href="http://necolas.github.io/normalize.css/3.0.1/normalize.css">
+    	<script src="jslide.js"></script>
+    	<style type="text/css">
+    	.jslide {
+    		position:relative;
+    	}
+    	.jslide-outside {
+    		overflow:hidden;
+    	}
+    	.jslide-item {
+    		float: left;
+    		box-sizing:border-box;
+    	}
+    	.jslide-container {
+    		width:100%;
+    		float:left;
+    	}
+    	.jslide-container::after {
+    		content:" ";
+    		display: table;
+    		clear:both;
+    	}
+    	.jslide-control { 
+    		position:absolute;
+    		z-index:15;
+    	}
+    	.jslide-control.left {
+    		left:0;
+    	}
+    	.jslide-control.right {
+    		right:0;
+    	}
+    	/*demo CSS only*/
+    	.jslide-item:nth-child(even) {
+    		background-color: navy;
+    	}
+    	.jslide-item:nth-child(odd) {
+    		background-color: slategrey;
+    	}
+    	.jslide-item {
+    		min-height: 150px;
+    		min-width:150px;
+    	}
+    	.jslide-control {
+    		min-height: 150px;
+    		width:25px;
+    		text-align: center;
+    		cursor: pointer;
+    		font-size:2em;
+    	}
+    	body {
+    		padding:35px;
+    	}
+    	</style>
+	</head>
+	<body>
+	<div class="jslide">
+		<div class="jslide-control left">&lt;</div>
+		<div class="jslide-control right nomore">&gt;</div>
+		<div class="jslide-outside">
+			<div class="jslide-container">
+				<div class="jslide-item"></div>
+				<div class="jslide-item"></div>
+				<div class="jslide-item"></div>
+				<div class="jslide-item"></div>
+				<div class="jslide-item"></div>
+				<div class="jslide-item"></div>
+				<div class="jslide-item"></div>
+				<div class="jslide-item"></div>
+				<div class="jslide-item"></div>
+				<div class="jslide-item"></div>
+				<div class="jslide-item"></div>
+				<div class="jslide-item"></div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+	$('.jslide').jslide()
+	</script>
+	</body>
+</html>
