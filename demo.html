@@ -1,7 +1,7 @@
 <html>
 	<head>
     	<title>jSlide jQuery Carousel Plugin</title>
-    	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
     	<link rel="stylesheet" type="text/css" href="http://necolas.github.io/normalize.css/3.0.1/normalize.css">
     	<script src="jslide.js"></script>
     	<style type="text/css">
@@ -16,8 +16,7 @@
     		box-sizing:border-box;
     	}
     	.jslide-container {
-    		width:100%;
-    		float:left;
+    		box-sizing:border-box;
     	}
     	.jslide-container::after {
     		content:" ";
@@ -28,6 +27,9 @@
     		position:absolute;
     		z-index:15;
     	}
+        .jslide-control.nomore {
+            color:grey;
+        }
     	.jslide-control.left {
     		left:0;
     	}
@@ -43,7 +45,9 @@
     	}
     	.jslide-item {
     		min-height: 150px;
-    		min-width:150px;
+            font-size: 30px;
+            text-align: center;
+            color:white;
     	}
     	.jslide-control {
     		min-height: 150px;
@@ -59,22 +63,24 @@
 	</head>
 	<body>
 	<div class="jslide">
-		<div class="jslide-control left">&lt;</div>
-		<div class="jslide-control right nomore">&gt;</div>
+		<div class="jslide-control left nomore">&lt;</div>
+		<div class="jslide-control right">&gt;</div>
 		<div class="jslide-outside">
 			<div class="jslide-container">
-				<div class="jslide-item"></div>
-				<div class="jslide-item"></div>
-				<div class="jslide-item"></div>
-				<div class="jslide-item"></div>
-				<div class="jslide-item"></div>
-				<div class="jslide-item"></div>
-				<div class="jslide-item"></div>
-				<div class="jslide-item"></div>
-				<div class="jslide-item"></div>
-				<div class="jslide-item"></div>
-				<div class="jslide-item"></div>
-				<div class="jslide-item"></div>
+				<div class="jslide-item">1</div>
+				<div class="jslide-item">2</div>
+				<div class="jslide-item">3</div>
+				<div class="jslide-item">4</div>
+				<div class="jslide-item">5</div>
+				<div class="jslide-item">6</div>
+				<div class="jslide-item">7</div>
+				<div class="jslide-item">8</div>
+				<div class="jslide-item">9</div>
+				<div class="jslide-item">10</div>
+				<div class="jslide-item">11</div>
+				<div class="jslide-item">12</div>
+                <div class="jslide-item">13</div>
+                <div class="jslide-item">14</div>
 			</div>
 		</div>
 	</div>

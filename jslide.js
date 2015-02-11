@@ -1,7 +1,12 @@
 (function($) {
     $.jslide = function(element, options) {
         var defaults = {
-            number: 4
+            'number': 4,
+            'time': 600,
+            onMovingLeft: function () {console.log('left')},
+            onMovingRight: function () {console.log('right')},
+            'CSSTransition':false,
+            'animationType': 'ease-in-out',
         }
         var plugin = this;
         plugin.settings = $.extend({}, defaults, options);
@@ -16,19 +21,61 @@
         plugin.init = function() {
             var paddingLeft=left.width();
             var paddingRight=right.width();
+            var text='right '+plugin.settings.time+'ms '+plugin.settings.animationType;
             $element.css({'padding-left':paddingLeft,'padding-right':paddingRight});
             moving=outside.width();
             items.css('width',moving/plugin.settings.number);
-            container.css('width',moving/plugin.settings.number*items.length)
+            console.log((Math.ceil(items.length/plugin.settings.number)))
+            container.css({'width':moving*(Math.ceil(items.length/plugin.settings.number)),'position':'relative','right':0});
+            if (plugin.settings.CSSTransition) {
+                container[0].style.webkitTransition=text;
+                container[0].style.mozTransition=text;
+                container[0].style.transition=text;
+            }
         }
-        var moveLeft = function() {
-            alert('yes');
-        }
-        var moveRight = function(){
-            alert();
+        plugin.move = function(direction) {
+            var step,callback;
+            if (direction==='left') {
+                step=parseInt(container.css('right'))+moving;
+                callback=plugin.settings.onMovingLeft;
+            }
+            else if (direction==='right') {
+                step=parseInt(container.css('right'))-moving;
+                callback=plugin.settings.onMovingRight;
+            }
+            if (plugin.settings.CSSTransition) {
+                container.css('right',step);
+                callback();
+            }
+            else {
+                container.animate({'right':step},plugin.settings.time,callback);
+            }
+            
         }
         plugin.init();
-        window.addEventListener('resize',plugin.init,false);
+        $(window).resize(plugin.init);
+        var event=function(){
+            if (right&&left) {
+                    right.click(function(){
+                        if (container.width()-parseInt(container.css('right'))>moving) {
+                            plugin.move('left');
+                        }
+                        else {
+                             //$(this).removeClass('nomore')
+                        }
+                    })
+                    left.click(function(){
+                        if (parseInt(container.css('right'))>0) {
+                            plugin.move('right');
+                            //$(this).removeClass('nomore')
+                        }
+                        else  {
+                            //$(this).addClass('nomore')
+                        }     
+                })
+            } 
+        }
+        event();
     }
 
     $.fn.jslide = function(options) {
