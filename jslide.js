@@ -19,13 +19,12 @@
         var outside=$element.find('.jslide-outside');
         var moving;
         plugin.init = function() {
-            var paddingLeft=left.width();
-            var paddingRight=right.width();
+            var paddingLeft=left.width()||0;
+            var paddingRight=right.width()||0;
             var text='right '+plugin.settings.time+'ms '+plugin.settings.animationType;
             $element.css({'padding-left':paddingLeft,'padding-right':paddingRight});
             moving=outside.width();
             items.css('width',moving/plugin.settings.number);
-            console.log((Math.ceil(items.length/plugin.settings.number)))
             container.css({'width':moving*(Math.ceil(items.length/plugin.settings.number)),'position':'relative','right':0});
             if (plugin.settings.CSSTransition) {
                 container[0].style.webkitTransition=text;
@@ -54,27 +53,32 @@
         }
         plugin.init();
         $(window).resize(plugin.init);
+        var checkEnd=function(){
+            if (parseInt(container.css('right'))==0) {
+                left.addClass('nomore');
+            }
+            else if (container.width()-parseInt(container.css('right'))<=moving) {
+                right.addClass('nomore');
+            }
+        }
         var event=function(){
             if (right&&left) {
                     right.click(function(){
                         if (container.width()-parseInt(container.css('right'))>moving) {
                             plugin.move('left');
-                        }
-                        else {
-                             //$(this).removeClass('nomore')
+                            left.removeClass('nomore');
+                            window.setTimeout(checkEnd,plugin.settings.time+100);
                         }
                     })
                     left.click(function(){
-                        if (parseInt(container.css('right'))>0) {
+                        if (parseInt(container.css('right'))>=moving) {
                             plugin.move('right');
-                            //$(this).removeClass('nomore')
+                            right.removeClass('nomore');
+                            window.setTimeout(checkEnd,plugin.settings.time+100);
                         }
-                        else  {
-                            //$(this).addClass('nomore')
-                        }     
-                })
-            } 
-        }
+                    })
+                } 
+            }
         event();
     }
 
