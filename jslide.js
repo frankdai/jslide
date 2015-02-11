@@ -44,6 +44,7 @@
             }
             if (plugin.settings.CSSTransition) {
                 container.css('right',step);
+
                 callback();
             }
             else {
@@ -62,22 +63,38 @@
             }
         }
         var event=function(){
-            if (right&&left) {
-                    right.click(function(){
+            var startX,endX;
+            var rightFunc=function(){
                         if (container.width()-parseInt(container.css('right'))>moving) {
                             plugin.move('left');
                             left.removeClass('nomore');
                             window.setTimeout(checkEnd,plugin.settings.time+100);
                         }
-                    })
-                    left.click(function(){
+                    }
+            var leftFunc=function(){
                         if (parseInt(container.css('right'))>=moving) {
                             plugin.move('right');
                             right.removeClass('nomore');
                             window.setTimeout(checkEnd,plugin.settings.time+100);
                         }
-                    })
-                } 
+                    }
+            if (right&&left) {
+                    right.click(rightFunc);
+                    left.click(leftFunc);
+                }
+            container.on('swipeLeft',rightFunc).on('swipeRight',leftFunc); 
+            container[0].addEventListener('touchstart',function(event){
+                startX=event.changedTouches[0].clientX;
+                },false)
+            container[0].addEventListener('touchend',function(event){
+                endX=event.changedTouches[0].clientX;
+                if (startX-endX>0) {
+                        $(this).trigger('swipeLeft');
+                    }
+                else {
+                        $(this).trigger('swipeRight')
+                    }
+                },false)
             }
         event();
     }

@@ -5,9 +5,6 @@
     	<link rel="stylesheet" type="text/css" href="http://necolas.github.io/normalize.css/3.0.1/normalize.css">
     	<script src="jslide.js"></script>
     	<style type="text/css">
-    	.jslide {
-    		position:relative;
-    	}
     	.jslide-outside {
     		overflow:hidden;
     	}
@@ -23,13 +20,13 @@
     		display: table;
     		clear:both;
     	}
+        /*only neccessary if you want to use built-in control*/
+        .jslide {
+            position:relative;
+        }
     	.jslide-control { 
     		position:absolute;
-    		z-index:15;
     	}
-        .jslide-control.nomore {
-            color:grey;
-        }
     	.jslide-control.left {
     		left:0;
     	}
@@ -59,6 +56,9 @@
     	body {
     		padding:35px;
     	}
+        .jslide-control.nomore {
+            color:grey;
+        }
     	</style>
 	</head>
 	<body>
