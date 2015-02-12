@@ -3,8 +3,8 @@
         var defaults = {
             'number': 4,
             'time': 600,
-            onMovingLeft: function () {console.log('left')},
-            onMovingRight: function () {console.log('right')},
+            onMovingLeft: function () {},
+            onMovingRight: function () {},
             'CSSTransition':false,
             'animationType': 'ease-in-out',
         }
@@ -44,8 +44,8 @@
             }
             if (plugin.settings.CSSTransition) {
                 container.css('right',step);
-
-                callback();
+                //container[0].addEventListener("transitionend", function(){console.log('hello')} , false);
+                window.setTimeout(callback,plugin.settings.time+100)
             }
             else {
                 container.animate({'right':step},plugin.settings.time,callback);
@@ -53,7 +53,7 @@
             
         }
         plugin.init();
-        $(window).resize(plugin.init);
+        //$(window).resize(plugin.init);
         var checkEnd=function(){
             if (parseInt(container.css('right'))==0) {
                 left.addClass('nomore');
