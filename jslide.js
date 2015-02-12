@@ -18,6 +18,14 @@
         var items=$element.find('.jslide-item');
         var outside=$element.find('.jslide-outside');
         var moving;
+        var checkEnd=function(){
+            if (parseInt(container.css('right'))==0) {
+                left.addClass('nomore');
+            }
+            else if (container.width()-parseInt(container.css('right'))<=moving) {
+                right.addClass('nomore');
+            }
+        }
         plugin.init = function() {
             var paddingLeft=left.width()||0;
             var paddingRight=right.width()||0;
@@ -34,55 +42,43 @@
         }
         plugin.move = function(direction) {
             var step,callback;
-            if (direction==='left') {
+            if (direction==='left' && container.width()-parseInt(container.css('right'))>moving) {
                 step=parseInt(container.css('right'))+moving;
                 callback=plugin.settings.onMovingLeft;
+                left.removeClass('nomore');
+                if (plugin.settings.CSSTransition) {
+                    container.css('right',step);
+                    window.setTimeout(callback,plugin.settings.time+100)
+                }
+                else {
+                    container.animate({'right':step},plugin.settings.time,callback);
+                }
+                window.setTimeout(checkEnd,plugin.settings.time+100);
             }
-            else if (direction==='right') {
+            else if (direction==='right' && parseInt(container.css('right'))>=moving) {
                 step=parseInt(container.css('right'))-moving;
                 callback=plugin.settings.onMovingRight;
+                right.removeClass('nomore');
+                if (plugin.settings.CSSTransition) {
+                    container.css('right',step);
+                    window.setTimeout(callback,plugin.settings.time+100)
+                }
+                else {
+                    container.animate({'right':step},plugin.settings.time,callback);
+                }
+                window.setTimeout(checkEnd,plugin.settings.time+100);
             }
-            if (plugin.settings.CSSTransition) {
-                container.css('right',step);
-                //container[0].addEventListener("transitionend", function(){console.log('hello')} , false);
-                window.setTimeout(callback,plugin.settings.time+100)
-            }
-            else {
-                container.animate({'right':step},plugin.settings.time,callback);
-            }
-            
         }
         plugin.init();
         //$(window).resize(plugin.init);
-        var checkEnd=function(){
-            if (parseInt(container.css('right'))==0) {
-                left.addClass('nomore');
-            }
-            else if (container.width()-parseInt(container.css('right'))<=moving) {
-                right.addClass('nomore');
-            }
-        }
+        
         var event=function(){
             var startX,endX;
-            var rightFunc=function(){
-                        if (container.width()-parseInt(container.css('right'))>moving) {
-                            plugin.move('left');
-                            left.removeClass('nomore');
-                            window.setTimeout(checkEnd,plugin.settings.time+100);
-                        }
-                    }
-            var leftFunc=function(){
-                        if (parseInt(container.css('right'))>=moving) {
-                            plugin.move('right');
-                            right.removeClass('nomore');
-                            window.setTimeout(checkEnd,plugin.settings.time+100);
-                        }
-                    }
             if (right&&left) {
-                    right.click(rightFunc);
-                    left.click(leftFunc);
+                    right.click(function(){plugin.move('left')});
+                    left.click(function(){plugin.move('right')});
                 }
-            container.on('swipeLeft',rightFunc).on('swipeRight',leftFunc); 
+            container.on('swipeLeft',function(){plugin.move('left')}).on('swipeRight',function(){plugin.move('right')}); 
             container[0].addEventListener('touchstart',function(event){
                 startX=event.changedTouches[0].clientX;
                 },false)

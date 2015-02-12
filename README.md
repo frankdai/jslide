@@ -96,4 +96,4 @@ Please place your actual content inside the jslide-item container and set margin
 ### Customize The Controls
 The two jslide-control class elements are optional. You can simply remove them from markup if you want to hide the left/right control, as in mobile device you can swipe left and right.
 
-If you want to use your customized controls ,please place them outside of this markup region and use above-mentioned API for control the slide. Please use your own logic for controlling like stop the slide and add/remove control class when it reach the end.
+If you want to use your customized controls ,please place them outside of this markup region and use above-mentioned API for control the slide. Please use your own logic for adding/removing control class name when it reach the end.
