@@ -99,7 +99,7 @@
         event();
     }
 
-    $.fn.jslide = function(options) {
+    $.fn.jSlide = function(options) {
         return this.each(function() {
             if (undefined == $(this).data('jslide')) {
                 var plugin = new $.jslide(this, options);

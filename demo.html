@@ -16,9 +16,12 @@
     		box-sizing:border-box;
     	}
     	.jslide-container::after {
-    		content:" ";
-    		display: table;
-    		clear:both;
+    		    content:" ";
+                display: block;
+                visibility:hidden;
+                width:0;
+                height:0;
+                clear:both;
     	}
         /*only neccessary if you want to use built-in control*/
         .jslide {
@@ -85,7 +88,7 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-	var jslide=$('.jslide').jslide({'CSSTransition':true,onMovingLeft:function(){console.log('left')},onMovingRight:function(){console.log('right')}})
+	var jslide=$('.jslide').jSlide({'number':5, onMovingLeft:function(){console.log('left')},onMovingRight:function(){console.log('right')}})
 	</script>
 	</body>
 </html>
