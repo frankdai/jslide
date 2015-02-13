@@ -7,6 +7,7 @@ Feature:
  * Touch-Enabled on mobile device. Swipe left or right for sliding.
  * API for customized control
 
+[Checkout The Demo](http://magento.frankdai.com/jslide/demo.html)
 
 This is not a slideshow plugin so there is no automatic sliding enabled. 
 
