@@ -1,5 +1,5 @@
 (function($) {
-    $.jslide = function(element, options) {
+    var Jslide = function(element, options) {
         var defaults = {
             'number': 4,
             'time': 600,
@@ -7,13 +7,16 @@
             onMovingRight: function () {},
             'CSSTransition':false,
             'animationType': 'ease-in-out',
+            'controlLeft':$(element).find('.jslide-control.left'),
+            'controlRight':$(element).find('.jslide-control.right'),
+            'controlEvent':'click',
         }
         var plugin = this;
         plugin.settings = $.extend({}, defaults, options);
         var $element = $(element),
              element = element;
-        var left=$element.find('.jslide-control.left');
-        var right=$element.find('.jslide-control.right');
+        var left=plugin.settings.controlLeft;
+        var right=plugin.settings.controlRight;
         var container=$element.find('.jslide-container');
         var items=$element.find('.jslide-item');
         var outside=$element.find('.jslide-outside');
@@ -30,7 +33,9 @@
             var paddingLeft=left.width()||0;
             var paddingRight=right.width()||0;
             var text='right '+plugin.settings.time+'ms '+plugin.settings.animationType;
-            $element.css({'padding-left':paddingLeft,'padding-right':paddingRight});
+            if (left.hasClass('jslide-control') && right.hasClass('jslide-control')) {
+                $element.css({'padding-left':paddingLeft,'padding-right':paddingRight});
+            }
             moving=outside.width();
             items.css('width',moving/plugin.settings.number);
             container.css({'width':moving*(Math.ceil(items.length/plugin.settings.number)),'position':'relative','right':0});
@@ -70,13 +75,11 @@
             }
         }
         plugin.init();
-        //$(window).resize(plugin.init);
-        
         var event=function(){
             var startX,endX;
             if (right&&left) {
-                    right.click(function(){plugin.move('left')});
-                    left.click(function(){plugin.move('right')});
+                    right.on(plugin.settings.controlEvent,function(){plugin.move('left')});
+                    left.on(plugin.settings.controlEvent,function(){plugin.move('right')});
                 }
             container.on('swipeLeft',function(){plugin.move('left')}).on('swipeRight',function(){plugin.move('right')}); 
             container[0].addEventListener('touchstart',function(event){
@@ -98,7 +101,7 @@
     $.fn.jSlide = function(options) {
         return this.each(function() {
             if (undefined == $(this).data('jslide')) {
-                var plugin = new $.jslide(this, options);
+                var plugin = new Jslide(this, options);
                 $(this).data('jslide', plugin);
             }
         });

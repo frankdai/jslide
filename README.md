@@ -43,12 +43,25 @@ var jslide=$('.jslide').jSlide()
 |animationType|string|[CSS3 transition function](https://developer.mozilla.org/en-US/docs/Web/CSS/transition-timing-function)|ease-in-out|
 |onMovingLeft|function|function to invoke when the slide moving left|empty function|
 |onMovingRight|function|function to invoke when the slide moving right |empty function|
+|controlLeft|jQuery instance|Customized control in the left |$(('.jslide-control.left'))|
+|controlRight|jQuery instance|Customized control in the right |$(('.jslide-control.right'))|
+|controlEvent|string|DOM event type for control to invoke|'click'|
 
 ## API
 ```javascript
-jslide.data('jslide').move('left') //move the slide to left
-jslide.data('jslide').move('right') //move the slide to right
-jslide.data('jslide').init() //re-initialize the plugin when dimension of wrapper 'jslide' class is changed, such during an 'resize' or 'oritentationchange' event
+var jslide=$('.jslide').jSlide();
+jslide.data('jslide').move('left'); 
+jslide.data('jslide').move('right'); 
+```
+Move the slide into left or right direction. The argument only takes one of the two strings: "left" and "right" 
+
+```javascript
+jslide.data('jslide').init() 
+```
+Re-initialize the plugin when dimension of wrapper 'jslide' class is changed, such during an 'resize' or 'oritentationchange' event. So you may consider to 
+
+```javascript
+$(window).resize(jslide.data('jslide').init);
 ```
 
 ## Customization
@@ -65,6 +78,7 @@ The only necessary CSS style are followed:
 }
 .jslide-container {
     box-sizing:border-box;
+    width:10000px; /*to keep the layout from broken in case of slow load*/
 }
 .jslide-container::after {
     content:" ";
@@ -94,6 +108,6 @@ If you want use built-in control, please add this to the CSS:
 Please place your actual content inside the jslide-item container and set margin/padding accrodingly. Please do not set margin on the item container itself. 
 
 ### Customize The Controls
-The two jslide-control class elements are optional. You can simply remove them from markup if you want to hide the left/right control, as in mobile device you can swipe left and right.
+The two 'jslide-control' class elements are optional. You can simply remove them from markup if you want to hide the left/right control, as in mobile device you can swipe left and right.
 
-If you want to use your customized controls ,please place them outside of this markup region and use above-mentioned API for control the slide. Please use your own logic for adding/removing control class name when it reach the end.
+If you want to use your customized controls ,please place them outside of this markup region and use the controlLeft and controlRight options. Both built-in or customized control will have add/remove a class named "nomore" when the carousel hit the left or right end, in order to have better styling. 

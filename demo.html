@@ -1,7 +1,7 @@
 <html>
 	<head>
     	<title>jSlide jQuery Carousel Plugin</title>
-    	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     	<link rel="stylesheet" type="text/css" href="http://necolas.github.io/normalize.css/3.0.1/normalize.css">
     	<script src="jslide.js"></script>
     	<style type="text/css">
@@ -14,6 +14,7 @@
     	}
     	.jslide-container {
     		box-sizing:border-box;
+            width:10000px;
     	}
     	.jslide-container::after {
     		    content:" ";
@@ -88,7 +89,7 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-	var jslide=$('.jslide').jSlide({'number':5, onMovingLeft:function(){console.log('left')},onMovingRight:function(){console.log('right')}})
+	var jslide=$('.jslide').jSlide()
 	</script>
 	</body>
 </html>
