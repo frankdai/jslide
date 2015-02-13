@@ -44,8 +44,8 @@ var jslide=$('.jslide').jSlide()
 |animationType|string|[CSS3 transition function](https://developer.mozilla.org/en-US/docs/Web/CSS/transition-timing-function)|ease-in-out|
 |onMovingLeft|function|function to invoke when the slide moving left|empty function|
 |onMovingRight|function|function to invoke when the slide moving right |empty function|
-|controlLeft|jQuery instance|Customized control in the left |$(('.jslide-control.left'))|
-|controlRight|jQuery instance|Customized control in the right |$(('.jslide-control.right'))|
+|controlLeft|jQuery instance|Customized control in the left |$('.jslide-control.left')|
+|controlRight|jQuery instance|Customized control in the right |$('.jslide-control.right')|
 |controlEvent|string|DOM event type for control to invoke|'click'|
 
 ## API

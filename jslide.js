@@ -29,6 +29,36 @@
                 right.addClass('nomore');
             }
         }
+        var goTo=function(step,callback) {
+            if (plugin.settings.CSSTransition) {
+                container.css('right',step);
+                window.setTimeout(callback,plugin.settings.time+100)
+            }
+            else {
+                container.animate({'right':step},plugin.settings.time,callback);
+            }
+            window.setTimeout(checkEnd,plugin.settings.time+100);
+        }
+        var event=function(){
+            var startX,endX;
+            if (right&&left) {
+                    right.on(plugin.settings.controlEvent,function(){plugin.move('left')});
+                    left.on(plugin.settings.controlEvent,function(){plugin.move('right')});
+                }
+            container.on('swipeLeft',function(){plugin.move('left')}).on('swipeRight',function(){plugin.move('right')}); 
+            container[0].addEventListener('touchstart',function(event){
+                startX=event.changedTouches[0].clientX;
+                },false)
+            container[0].addEventListener('touchend',function(event){
+                endX=event.changedTouches[0].clientX;
+                if (startX-endX>0) {
+                        $(this).trigger('swipeLeft');
+                    }
+                else {
+                        $(this).trigger('swipeRight')
+                    }
+                },false)
+        }
         plugin.init = function() {
             var paddingLeft=left.width()||0;
             var paddingRight=right.width()||0;
@@ -51,50 +81,16 @@
                 step=parseInt(container.css('right'))+moving;
                 callback=plugin.settings.onMovingLeft;
                 left.removeClass('nomore');
-                if (plugin.settings.CSSTransition) {
-                    container.css('right',step);
-                    window.setTimeout(callback,plugin.settings.time+100)
-                }
-                else {
-                    container.animate({'right':step},plugin.settings.time,callback);
-                }
-                window.setTimeout(checkEnd,plugin.settings.time+100);
+                goTo(step,callback);
             }
             else if (direction==='right' && parseInt(container.css('right'))>=moving) {
                 step=parseInt(container.css('right'))-moving;
                 callback=plugin.settings.onMovingRight;
                 right.removeClass('nomore');
-                if (plugin.settings.CSSTransition) {
-                    container.css('right',step);
-                    window.setTimeout(callback,plugin.settings.time+100)
-                }
-                else {
-                    container.animate({'right':step},plugin.settings.time,callback);
-                }
-                window.setTimeout(checkEnd,plugin.settings.time+100);
+                goTo(step,callback);
             }
         }
         plugin.init();
-        var event=function(){
-            var startX,endX;
-            if (right&&left) {
-                    right.on(plugin.settings.controlEvent,function(){plugin.move('left')});
-                    left.on(plugin.settings.controlEvent,function(){plugin.move('right')});
-                }
-            container.on('swipeLeft',function(){plugin.move('left')}).on('swipeRight',function(){plugin.move('right')}); 
-            container[0].addEventListener('touchstart',function(event){
-                startX=event.changedTouches[0].clientX;
-                },false)
-            container[0].addEventListener('touchend',function(event){
-                endX=event.changedTouches[0].clientX;
-                if (startX-endX>0) {
-                        $(this).trigger('swipeLeft');
-                    }
-                else {
-                        $(this).trigger('swipeRight')
-                    }
-                },false)
-            }
         event();
     }
 
