@@ -14,8 +14,8 @@ To use this plugin, simply add the js file after jQuery library. The HTML markup
 
 ```html
 <div class="jslide">
-	<div class="jslide-control left nomore">&lt;</div>
-	<div class="jslide-control right">&gt;</div>
+	<div class="jslide-control left nomore"></div>
+	<div class="jslide-control right"></div>
 	<div class="jslide-outside">
 		<div class="jslide-container">
 			<div class="jslide-item"></div>
